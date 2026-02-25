@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ci.nsu.moble.main.ui.theme.PracticeTheme
+import ci.nsu.moble.main.data.ColorData
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +60,14 @@ fun ColorSearchScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {},
+            onClick = {
+                val searchColor = inputText.lowercase().trim()
+                val foundColor = ColorData.colors[searchColor]
+
+                if (foundColor != null) {
+                    buttonColor = Color(foundColor)
+                }
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = buttonColor
             ),
