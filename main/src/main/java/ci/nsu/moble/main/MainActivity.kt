@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ci.nsu.moble.main.ui.theme.PracticeTheme
 import ci.nsu.moble.main.data.ColorData
+import android.util.Log
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +67,9 @@ fun ColorSearchScreen(modifier: Modifier = Modifier) {
 
                 if (foundColor != null) {
                     buttonColor = Color(foundColor)
+                    Log.d("ColorSearch", "Цвет '$searchColor' найден и применен")
+                } else {
+                    Log.e("ColorSearch", "Пользовательский цвет '$searchColor' не найден")
                 }
             },
             colors = ButtonDefaults.buttonColors(
