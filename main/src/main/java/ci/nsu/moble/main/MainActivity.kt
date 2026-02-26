@@ -15,6 +15,10 @@ import androidx.compose.ui.unit.dp
 import ci.nsu.moble.main.ui.theme.PracticeTheme
 import ci.nsu.moble.main.data.ColorData
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +40,7 @@ class MainActivity : ComponentActivity() {
 fun ColorSearchScreen(modifier: Modifier = Modifier) {
     var inputText by remember { mutableStateOf("") }
     var buttonColor by remember { mutableStateOf(Color(0xFF2196F3)) }
+    val context = LocalContext.current
 
     Column(
         modifier = modifier
@@ -78,6 +83,74 @@ fun ColorSearchScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Применить цвет", color = Color.White)
+        }
+        Spacer(modifier = Modifier.height(24.dp))
+
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 8.dp),
+            thickness = 1.dp
+        )
+
+        Text(
+            text = "Палитра цветов:",
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.weight(1f)
+        ) {
+            items(
+                items = ColorData.colors.toList(),
+                key = { it.first }
+            ) { (colorName, colorValue) ->
+                ColorPaletteItem(
+                    colorName = colorName,
+                    colorValue = colorValue,
+                    onColorSelected = { name, value ->
+                        inputText = name
+                        buttonColor = Color(value)
+                        Log.d("ColorSearch", "Выбран цвет из палитры: '$name'")
+                    }
+                )
+            }
+            }
+    }
+}
+
+@Composable
+fun ColorPaletteItem(
+    colorName: String,
+    colorValue: Int,
+    onColorSelected: (String, Int) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .clickable { onColorSelected(colorName, colorValue) },
+        colors = CardDefaults.cardColors(
+            containerColor = Color(colorValue)
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = colorName,
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Text(
+                text = "#${Integer.toHexString(colorValue).substring(2).uppercase()}",
+                color = Color.White.copy(alpha = 1.2f),
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }
