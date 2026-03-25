@@ -55,6 +55,10 @@ class ShoppingViewModel : ViewModel() {
     }
 
     fun deleteItem(itemId: Int) {
-        // TODO: реализовать
+        _uiState.update { currentState ->
+            currentState.copy(
+                items = currentState.items.filter { it.id != itemId }
+            )
+        }
     }
 }
