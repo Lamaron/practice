@@ -29,7 +29,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingScreen(viewModel: ShoppingViewModel = viewModel()){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

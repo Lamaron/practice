@@ -29,9 +29,10 @@ class ShoppingViewModel : ViewModel() {
         val currentText = _uiState.value.newItemText
         if (currentText.isNotBlank()) {
             _uiState.update { currentState ->
+                val formattedText = formatItemName(currentText)
                 val newItem = ShoppingItem(
                     id = currentState.items.size + 1,
-                    name = currentText
+                    name = formattedText
                 )
                 currentState.copy(
                     items = currentState.items + newItem,
@@ -60,5 +61,18 @@ class ShoppingViewModel : ViewModel() {
                 items = currentState.items.filter { it.id != itemId }
             )
         }
+    }
+
+    private fun formatItemName(text: String): String {
+        var formatted = text.trim()
+
+        formatted = formatted.replace(Regex("\\s+"), " ")
+
+        if (formatted.isNotEmpty()) {
+            formatted = formatted.lowercase()
+            formatted = formatted.replaceFirstChar { it.uppercase() }
+        }
+
+        return formatted
     }
 }
