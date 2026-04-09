@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.DBO
+package ci.nsu.mobile.main.Data.Local
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy

@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.DBO
+package ci.nsu.mobile.main.Data.Local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
