@@ -1,0 +1,17 @@
+package ci.nsu.mobile.main.ui
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import ci.nsu.mobile.main.ui.screens.MainScreen
+import androidx.navigation.compose.rememberNavController
+import ci.nsu.mobile.main.ViewModel.DepositViewModel
+
+@Composable
+fun AppNavigation(viewModel: DepositViewModel) {
+    val navController = rememberNavController()
+
+    NavHost(navController = navController, startDestination = "main") {
+        composable("main") { MainScreen(navController) }
+    }
+}
