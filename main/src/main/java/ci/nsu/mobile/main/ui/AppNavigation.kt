@@ -7,6 +7,7 @@ import ci.nsu.mobile.main.ui.screens.MainScreen
 import ci.nsu.mobile.main.ui.screens.Step1Screen
 import androidx.navigation.compose.rememberNavController
 import ci.nsu.mobile.main.ViewModel.DepositViewModel
+import ci.nsu.mobile.main.ui.screens.Step2Screen
 
 @Composable
 fun AppNavigation(viewModel: DepositViewModel) {
@@ -15,5 +16,6 @@ fun AppNavigation(viewModel: DepositViewModel) {
     NavHost(navController = navController, startDestination = "main") {
         composable("main") { MainScreen(navController) }
         composable("step1") { Step1Screen(navController, viewModel) }
+        composable("step2") { Step2Screen(navController, viewModel) }
     }
 }
