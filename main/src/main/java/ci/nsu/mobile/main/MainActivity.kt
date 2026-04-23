@@ -23,16 +23,15 @@ import ci.nsu.mobile.main.ui.theme.PracticeTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val database = AppDatabase.getDatabase(applicationContext)
         val repository = DepositRepository(database.depositDao())
+
         val viewModel = DepositViewModel(repository)
 
         setContent {
             PracticeTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
+                Surface(color = MaterialTheme.colorScheme.background) {
                     AppNavigation(viewModel)
                 }
             }
