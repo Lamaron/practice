@@ -21,6 +21,8 @@ class DepositViewModel(private val repository: DepositRepository) : ViewModel() 
 
     val history: Flow<List<DepositEntity>> = repository.allDeposits
 
+    var isReadOnlyMode by mutableStateOf(false)
+
     fun getAvailableRate(): Double {
         val months = periodMonths.toIntOrNull() ?: 0
         return when {
@@ -31,6 +33,7 @@ class DepositViewModel(private val repository: DepositRepository) : ViewModel() 
     }
 
     fun loadFromHistory(item: DepositEntity) {
+        isReadOnlyMode = true
         initialAmount = item.initialAmount.toString()
         periodMonths = item.periodMonths.toString()
         monthlyTopUp = item.monthlyTopUp.toString()
@@ -62,5 +65,10 @@ class DepositViewModel(private val repository: DepositRepository) : ViewModel() 
                 )
             )
         }
+    }
+
+    fun onCalculateClicked() {
+        isReadOnlyMode = false
+        calculate()
     }
 }

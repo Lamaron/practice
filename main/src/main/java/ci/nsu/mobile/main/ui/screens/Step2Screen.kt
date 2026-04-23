@@ -40,7 +40,7 @@ fun Step2Screen(navController: NavController, viewModel: DepositViewModel) {
             TextButton(onClick = { navController.popBackStack() }) { Text("Назад") }
             Spacer(modifier = Modifier.weight(1f))
             Button(onClick = {
-                viewModel.calculate() // Считаем перед переходом
+                viewModel.onCalculateClicked() // Считаем перед переходом
                 navController.navigate("result")
             }) { Text("Рассчитать") }
         }
