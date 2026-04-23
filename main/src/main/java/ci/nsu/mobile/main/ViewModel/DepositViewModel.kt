@@ -31,6 +31,14 @@ class DepositViewModel(private val repository: DepositRepository) : ViewModel() 
         }
     }
 
+    fun loadFromHistory(item: DepositEntity) {
+        initialAmount = item.initialAmount.toString()
+        periodMonths = item.periodMonths.toString()
+        monthlyTopUp = item.monthlyTopUp.toString()
+        finalAmount = item.finalAmount
+        interestEarned = item.interestEarned
+    }
+
     fun calculate() {
         val initial = initialAmount.toDoubleOrNull() ?: 0.0
         val months = periodMonths.toIntOrNull() ?: 0
