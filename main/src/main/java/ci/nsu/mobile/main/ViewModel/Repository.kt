@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.Data
+package ci.nsu.mobile.main.ViewModel
 import ci.nsu.mobile.main.Data.Local.DepositDao
 import ci.nsu.mobile.main.Data.Local.DepositEntity
 import kotlinx.coroutines.flow.Flow

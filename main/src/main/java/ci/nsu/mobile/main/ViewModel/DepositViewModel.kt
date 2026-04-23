@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ci.nsu.mobile.main.Data.DepositRepository
 import ci.nsu.mobile.main.Data.Local.DepositEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
