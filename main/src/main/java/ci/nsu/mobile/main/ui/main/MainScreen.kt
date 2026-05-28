@@ -1,27 +1,43 @@
 package ci.nsu.mobile.main.ui.main
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ci.nsu.mobile.main.di.ServiceLocator
+import ci.nsu.mobile.main.ui.main.tabs.DepositsTab
+import ci.nsu.mobile.main.ui.main.tabs.NewDepositTab
+import ci.nsu.mobile.main.ui.main.tabs.UsersTab
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
     onLogout: () -> Unit,
-    viewModel: MainViewModel = viewModel()
+    serviceLocator: ServiceLocator,
+    viewModel: MainViewModel = viewModel(
+        factory = MainViewModel.Factory(
+            serviceLocator.authRepository,
+            serviceLocator.depositRepository,
+            serviceLocator.userManager
+        )
+    )
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    var selectedTab by remember { mutableIntStateOf(0) }
+
+    val tabs = listOf("Пользователи", "Мои расчёты", "Новый расчёт")
+    val icons = listOf(
+        Icons.Default.Person,
+        Icons.Default.List,
+        Icons.Default.Add
+    )
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Главный экран") },
+                title = { Text("Расчёт вкладов") },
                 actions = {
                     TextButton(onClick = {
                         viewModel.logout()
@@ -31,83 +47,25 @@ fun MainScreen(
                     }
                 }
             )
+        },
+        bottomBar = {
+            NavigationBar {
+                tabs.forEachIndexed { index, title ->
+                    NavigationBarItem(
+                        icon = { Icon(icons[index], contentDescription = null) },
+                        label = { Text(title) },
+                        selected = selectedTab == index,
+                        onClick = { selectedTab = index }
+                    )
+                }
+            }
         }
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else if (uiState.error != null) {
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Ошибка загрузки данных",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                    Text(
-                        text = uiState.error!!,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(onClick = { viewModel.loadUsers() }) {
-                        Text("Повторить")
-                    }
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    item {
-                        Text(
-                            text = "Список пользователей (${uiState.users.size})",
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-                    }
-
-                    items(uiState.users) { user ->
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp)
-                            ) {
-                                Text(
-                                    text = user.person?.let {
-                                        "${it.lastName} ${it.firstName} ${it.middleName ?: ""}"
-                                    } ?: user.login,
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                                if (user.email != null) {
-                                    Text(
-                                        text = "Email: ${user.email}",
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
-                                }
-                                if (user.phoneNumber != null) {
-                                    Text(
-                                        text = "Телефон: ${user.phoneNumber}",
-                                        style = MaterialTheme.typography.bodyMedium
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+        Box(modifier = Modifier.padding(padding)) {
+            when (selectedTab) {
+                0 -> UsersTab(viewModel = viewModel)
+                1 -> DepositsTab(viewModel = viewModel)
+                2 -> NewDepositTab(viewModel = viewModel)
             }
         }
     }

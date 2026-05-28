@@ -4,13 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import ci.nsu.mobile.main.di.ServiceLocator
 import ci.nsu.mobile.main.ui.login.LoginScreen
 import ci.nsu.mobile.main.ui.main.MainScreen
 import ci.nsu.mobile.main.ui.register.RegisterScreen
 
-
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(
+    navController: NavHostController,
+    serviceLocator: ServiceLocator
+) {
     NavHost(
         navController = navController,
         startDestination = "login"
@@ -47,7 +50,8 @@ fun NavGraph(navController: NavHostController) {
                     navController.navigate("login") {
                         popUpTo(0) { inclusive = true }
                     }
-                }
+                },
+                serviceLocator = serviceLocator
             )
         }
     }
