@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.data.api
+package ci.nsu.mobile.main.data.remote.api
 
 
 import ci.nsu.mobile.main.data.interceptor.AuthInterceptor

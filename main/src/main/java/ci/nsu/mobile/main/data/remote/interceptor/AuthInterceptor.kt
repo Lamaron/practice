@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.data.interceptor
+package ci.nsu.mobile.main.data.remote.interceptor
 
 import ci.nsu.mobile.main.data.token.TokenManager
 import okhttp3.Interceptor

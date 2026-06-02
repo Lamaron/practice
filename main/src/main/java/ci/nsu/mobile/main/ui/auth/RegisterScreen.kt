@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.ui.register
+package ci.nsu.mobile.main.ui.auth
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

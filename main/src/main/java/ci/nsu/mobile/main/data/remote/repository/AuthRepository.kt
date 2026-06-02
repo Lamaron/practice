@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.data.repository
+package ci.nsu.mobile.main.data.remote.repository
 
 import ci.nsu.mobile.main.data.api.ApiService
 import ci.nsu.mobile.main.data.model.GroupDto
