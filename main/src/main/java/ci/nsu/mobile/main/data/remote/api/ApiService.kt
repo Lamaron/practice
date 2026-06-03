@@ -1,12 +1,12 @@
 package ci.nsu.mobile.main.data.remote.api
 
 
-import ci.nsu.mobile.main.data.interceptor.AuthInterceptor
-import ci.nsu.mobile.main.data.model.GroupDto
-import ci.nsu.mobile.main.data.model.LoginRequest
-import ci.nsu.mobile.main.data.model.LoginResponse
-import ci.nsu.mobile.main.data.model.RegisterRequest
-import ci.nsu.mobile.main.data.model.UserDto
+import ci.nsu.mobile.main.data.remote.interceptor.AuthInterceptor
+import ci.nsu.mobile.main.data.remote.model.GroupDto
+import ci.nsu.mobile.main.data.remote.model.LoginRequest
+import ci.nsu.mobile.main.data.remote.model.LoginResponse
+import ci.nsu.mobile.main.data.remote.model.RegisterRequest
+import ci.nsu.mobile.main.data.remote.model.UserDto
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*

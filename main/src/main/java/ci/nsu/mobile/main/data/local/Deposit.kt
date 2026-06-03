@@ -1,11 +1,12 @@
-package ci.nsu.mobile.main.data.Local
+package ci.nsu.mobile.main.data.local
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
 
 @Entity(tableName = "deposits")
 data class DepositEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val userId: Long,
     val initialAmount: Double,
     val periodMonths: Int,
     val interestRate: Double,

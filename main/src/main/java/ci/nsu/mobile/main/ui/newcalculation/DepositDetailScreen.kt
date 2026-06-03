@@ -21,10 +21,10 @@ import androidx.navigation.NavController
 import ci.nsu.mobile.main.viewmodel.DepositViewModel
 
 @Composable
-fun ResultScreen(
+fun DepositDetailScreen(
     navController: NavController,
     viewModel: DepositViewModel,
-    onSaveComplete: () -> Unit
+    onBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -44,7 +44,7 @@ fun ResultScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Text(
-                    text = if (viewModel.isReadOnlyMode) "Детали расчёта" else "Результат расчёта",
+                    text = "Детали расчёта",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -77,37 +77,11 @@ fun ResultScreen(
             }
         }
 
-        if (viewModel.isReadOnlyMode) {
-            Button(
-                onClick = {
-                    navController.popBackStack()
-                },
-                modifier = Modifier.fillMaxWidth(0.8f)
-            ) {
-                Text("Вернуться в историю")
-            }
-        } else {
-            Button(
-                onClick = {
-                    viewModel.saveCalculation()
-                    viewModel.clearForm()
-                    onSaveComplete()
-                },
-                modifier = Modifier.fillMaxWidth(0.8f)
-            ) {
-                Text("Сохранить и в начало")
-            }
+        Button(
+            onClick = onBack,
+            modifier = Modifier.fillMaxWidth(0.8f)
+        ) {
+            Text("Назад")
         }
-    }
-}
-
-@Composable
-fun CalculationResultRow(label: String, value: String) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = label, style = MaterialTheme.typography.bodyMedium)
-        Text(text = value, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
     }
 }

@@ -30,25 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import ci.nsu.mobile.main.viewmodel.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    onLoginSuccess: () -> Unit,
+    onLoginSuccess: (Long) -> Unit,
     onNavigateToRegister: () -> Unit,
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel
 ) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
     val uiState by viewModel.uiState.collectAsState()
-
-    LaunchedEffect(uiState.isSuccess) {
-        if (uiState.isSuccess) {
-            onLoginSuccess()
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -96,7 +89,9 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    viewModel.login(login, password)
+                    viewModel.login(login, password) { userId ->
+                        onLoginSuccess(userId)
+                    }
                 },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !uiState.isLoading && login.isNotBlank() && password.isNotBlank()

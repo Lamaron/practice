@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.app.DatePickerDialog
+import ci.nsu.mobile.main.viewmodel.RegisterViewModel
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -281,7 +282,9 @@ fun RegisterScreen(
                         password = password,
                         email = email,
                         phoneNumber = phoneNumber
-                    )
+                    ) {
+                        onRegisterSuccess()
+                    }
                 },
                 modifier = Modifier.fillMaxWidth(),
                 enabled = !uiState.isLoading &&

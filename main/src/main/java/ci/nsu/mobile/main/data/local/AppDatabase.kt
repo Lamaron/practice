@@ -1,11 +1,13 @@
-package ci.nsu.mobile.main.data.Local
+package ci.nsu.mobile.main.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [DepositEntity::class], version = 1, exportSchema = false)
+@Database(entities = [DepositEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun depositDao(): DepositDao
@@ -14,6 +16,13 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        // Миграция для добавления поля userId
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE deposits ADD COLUMN userId INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -21,9 +30,9 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "deposits_database"
                 )
-                    .fallbackToDestructiveMigration()
+                    .addMigrations(MIGRATION_1_2)
+                    .fallbackToDestructiveMigration() // запасной вариант
                     .build()
-
                 INSTANCE = instance
                 instance
             }

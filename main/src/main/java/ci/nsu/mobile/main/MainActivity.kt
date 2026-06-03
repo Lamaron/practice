@@ -6,30 +6,27 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import ci.nsu.mobile.main.data.token.TokenManager
 import ci.nsu.mobile.main.di.ServiceLocator
-import ci.nsu.mobile.main.ui.navigation.NavGraph
+import ci.nsu.mobile.main.ui.navigation.AppNavGraph
+import ci.nsu.mobile.main.ui.theme.PracticeTheme
 
 class MainActivity : ComponentActivity() {
-
-    private lateinit var serviceLocator: ServiceLocator
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        TokenManager.init(this)
-        serviceLocator = ServiceLocator.getInstance(this)
-
         setContent {
-            MaterialTheme {
+            PracticeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    val serviceLocator = remember { ServiceLocator(applicationContext) }
                     val navController = rememberNavController()
-                    NavGraph(
+                    AppNavGraph(
                         navController = navController,
                         serviceLocator = serviceLocator
                     )

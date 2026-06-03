@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import ci.nsu.mobile.main.ViewModel.DepositViewModel
+import ci.nsu.mobile.main.viewmodel.DepositViewModel
 
 @Composable
 fun Step2Screen(navController: NavController, viewModel: DepositViewModel) {
