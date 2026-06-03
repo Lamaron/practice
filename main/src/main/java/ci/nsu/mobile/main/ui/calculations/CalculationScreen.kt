@@ -49,6 +49,7 @@ import ci.nsu.mobile.main.viewmodel.FilterType
 import ci.nsu.mobile.main.viewmodel.SortOrder
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.compose.ui.platform.LocalLocale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -194,7 +195,7 @@ fun CalculationCard(
     onItemClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+    val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", LocalLocale.current.platformLocale)
     val dateString = sdf.format(Date(calculation.calculationDate))
 
     Card(

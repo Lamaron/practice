@@ -62,7 +62,7 @@ class DepositViewModel(
         viewModelScope.launch {
             repository.insertDeposit(
                 DepositEntity(
-                    userId = userId,
+//                    userId = userId,
                     initialAmount = initialAmount.toDouble(),
                     periodMonths = periodMonths.toInt(),
                     interestRate = getAvailableRate(),
